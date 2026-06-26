@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ВременныйЗабор.kz — Аренда и продажа временных ограждений в Казахстане</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ── DARK THEME (default) ── */
+  [data-theme="dark"] {
+    --bg-page:      #0F1113;
+    --bg-surface:   #1A1D21;
+    --bg-raised:    #2C3038;
+    --text-primary: #F5F6F8;
+    --text-secondary:#C8CDD6;
+    --text-muted:   #6B7280;
+    --border:       rgba(255,255,255,0.08);
+    --border-md:    rgba(255,255,255,0.15);
+    --accent:       #E8A020;
+    --accent-dark:  #C4861A;
+    --accent-bg:    rgba(232,160,32,0.12);
+    --accent-border:rgba(232,160,32,0.25);
+    --hero-grid:    rgba(255,255,255,0.02);
+    --nav-bg:       rgba(15,17,19,0.95);
+    --input-bg:     #2C3038;
+    --input-border: rgba(255,255,255,0.1);
+    --input-color:  #F5F6F8;
+    --product-bg:   #1A1D21;
+    --product-hover:#2C3038;
+    --product-grid: #2C3038;
+    --stats-bg:     #2C3038;
+    --step-bg:      #1A1D21;
+    --case-bg:      #2C3038;
+    --cta-bg:       #2C3038;
+    --form-bg:      #1A1D21;
+    --footer-bg:    #1A1D21;
+    --badge-bg:     #2C3038;
+    --btn-sec-color:#F5F6F8;
+    --btn-sec-border:rgba(255,255,255,0.25);
+    --btn-sec-hover: rgba(255,255,255,0.05);
+    --product-cta-border: rgba(255,255,255,0.2);
+    --product-cta-color: #F5F6F8;
+    --product-cta-hover: rgba(255,255,255,0.08);
+    --success-title:#F5F6F8;
+    --theme-icon: "☀️";
+    --shadow: none;
+  }
+
+  /* ── LIGHT THEME ── */
+  [data-theme="light"] {
+    --bg-page:      #F0F2F5;
+    --bg-surface:   #FFFFFF;
+    --bg-raised:    #E8EBEF;
+    --text-primary: #111317;
+    --text-secondary:#3D4350;
+    --text-muted:   #6B7280;
+    --border:       rgba(0,0,0,0.08);
+    --border-md:    rgba(0,0,0,0.15);
+    --accent:       #C47A0A;
+    --accent-dark:  #A36208;
+    --accent-bg:    rgba(196,122,10,0.08);
+    --accent-border:rgba(196,122,10,0.25);
+    --hero-grid:    rgba(0,0,0,0.04);
+    --nav-bg:       rgba(240,242,245,0.96);
+    --input-bg:     #F5F7FA;
+    --input-border: rgba(0,0,0,0.14);
+    --input-color:  #111317;
+    --product-bg:   #FFFFFF;
+    --product-hover:#F0F2F5;
+    --product-grid: #D4D8DE;
+    --stats-bg:     #E4E7EC;
+    --step-bg:      #F0F2F5;
+    --case-bg:      #FFFFFF;
+    --cta-bg:       #E4E7EC;
+    --form-bg:      #FFFFFF;
+    --footer-bg:    #E4E7EC;
+    --badge-bg:     #E4E7EC;
+    --btn-sec-color:#111317;
+    --btn-sec-border:rgba(0,0,0,0.25);
+    --btn-sec-hover: rgba(0,0,0,0.05);
+    --product-cta-border: rgba(0,0,0,0.2);
+    --product-cta-color: #111317;
+    --product-cta-hover: rgba(0,0,0,0.05);
+    --success-title:#111317;
+    --theme-icon: "🌙";
+    --shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+
+  :root {
+    --ff-head: 'Georgia', 'Times New Roman', serif;
+    --ff-body: -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--ff-body);
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.25s, color 0.25s;
+  }
+
+  /* ── THEME TOGGLE ── */
+  .theme-toggle {
+    background: var(--bg-raised);
+    border: 1px solid var(--border-md);
+    border-radius: 20px;
+    cursor: pointer;
+    padding: 5px 12px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    display: flex; align-items: center; gap: 6px;
+    transition: background 0.15s, border-color 0.15s;
+    white-space: nowrap;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--text-primary); }
+  .theme-toggle-icon { font-size: 14px; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--nav-bg);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    height: 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background 0.25s, border-color 0.25s;
+  }
+  .nav-left { display: flex; align-items: center; gap: 40px; }
+  .nav-logo {
+    font-family: var(--ff-body);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--text-primary); }
+  .nav-right { display: flex; align-items: center; gap: 14px; }
+  .nav-cta {
+    background: var(--accent);
+    color: #fff !important;
+    font-weight: 600;
+    padding: 8px 20px;
+    border-radius: 2px;
+    font-size: 13px !important;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .nav-cta:hover { background: var(--accent-dark) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    padding: 120px 40px 80px;
+    display: flex; align-items: center;
+    background:
+      repeating-linear-gradient(90deg, var(--hero-grid) 0px, var(--hero-grid) 1px, transparent 1px, transparent 80px),
+      repeating-linear-gradient(0deg, var(--hero-grid) 0px, var(--hero-grid) 1px, transparent 1px, transparent 80px),
+      var(--bg-page);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.25s;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse 60% 50% at 70% 50%, var(--accent-bg) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 1100px; margin: 0 auto; width: 100%;
+    display: grid; grid-template-columns: 1fr 420px;
+    gap: 80px; align-items: center;
+    position: relative; z-index: 1;
+  }
+  .hero-eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block; width: 28px; height: 1px; background: var(--accent);
+  }
+  .hero-title {
+    font-family: var(--ff-head);
+    font-size: clamp(38px, 5vw, 60px); font-weight: 400;
+    line-height: 1.1; letter-spacing: -0.02em;
+    color: var(--text-primary); margin-bottom: 24px;
+  }
+  .hero-title em { font-style: normal; color: var(--accent); }
+  .hero-sub {
+    font-size: 17px; color: var(--text-secondary);
+    line-height: 1.7; max-width: 480px; margin-bottom: 40px;
+  }
+  .hero-badges { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+  .badge {
+    display: flex; align-items: center; gap: 7px;
+    background: var(--badge-bg); border: 1px solid var(--border);
+    border-radius: 2px; padding: 7px 14px;
+    font-size: 13px; color: var(--text-secondary);
+    transition: background 0.25s;
+  }
+  .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent); color: #fff;
+    font-weight: 700; font-size: 14px; letter-spacing: 0.06em;
+    text-transform: uppercase; padding: 14px 32px;
+    border: none; border-radius: 2px; cursor: pointer;
+    text-decoration: none; display: inline-block;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .btn-primary:hover { background: var(--accent-dark); transform: translateY(-1px); }
+  .btn-secondary {
+    background: transparent; color: var(--btn-sec-color);
+    font-weight: 600; font-size: 14px; letter-spacing: 0.06em;
+    text-transform: uppercase; padding: 13px 32px;
+    border: 1px solid var(--btn-sec-border); border-radius: 2px;
+    cursor: pointer; text-decoration: none; display: inline-block;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .btn-secondary:hover { border-color: var(--text-primary); background: var(--btn-sec-hover); }
+
+  /* Hero form card */
+  .hero-form-card {
+    background: var(--form-bg); border: 1px solid var(--border);
+    border-top: 3px solid var(--accent); border-radius: 2px; padding: 36px 32px;
+    box-shadow: var(--shadow);
+    transition: background 0.25s, border-color 0.25s;
+  }
+  .form-title { font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+  .form-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
+  .form-group { margin-bottom: 14px; }
+  .form-label {
+    display: block; font-size: 12px; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 6px;
+  }
+  .form-input, .form-select {
+    width: 100%; background: var(--input-bg);
+    border: 1px solid var(--input-border); border-radius: 2px;
+    color: var(--input-color); font-size: 14px;
+    font-family: var(--ff-body); padding: 11px 14px;
+    outline: none; transition: border-color 0.15s, background 0.25s; appearance: none;
+  }
+  .form-input:focus, .form-select:focus { border-color: var(--accent); }
+  .form-input::placeholder { color: var(--text-muted); }
+  .form-select option { background: var(--input-bg); color: var(--input-color); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .form-submit {
+    width: 100%; background: var(--accent); color: #fff;
+    font-weight: 700; font-size: 14px; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 14px; border: none;
+    border-radius: 2px; cursor: pointer; margin-top: 6px; transition: background 0.15s;
+  }
+  .form-submit:hover { background: var(--accent-dark); }
+  .form-note { font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 10px; line-height: 1.5; }
+  .wa-btn {
+    width: 100%; background: #1FAD4E; color: #fff;
+    font-weight: 700; font-size: 14px; letter-spacing: 0.04em;
+    padding: 13px; border: none; border-radius: 2px; cursor: pointer;
+    margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px;
+    text-decoration: none; transition: background 0.15s;
+  }
+  .wa-btn:hover { background: #178A3F; }
+  .form-divider {
+    display: flex; align-items: center; gap: 10px;
+    margin: 14px 0 0; font-size: 11px; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .form-divider::before, .form-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    background: var(--stats-bg); border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border); padding: 28px 40px;
+    transition: background 0.25s;
+  }
+  .stats-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); }
+  .stat-item { text-align: center; padding: 0 24px; border-right: 1px solid var(--border); }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { font-family: var(--ff-head); font-size: 36px; font-weight: 400; color: var(--text-primary); line-height: 1; margin-bottom: 6px; }
+  .stat-num span { color: var(--accent); }
+  .stat-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* ── SECTIONS ── */
+  .section { padding: 96px 40px; transition: background 0.25s; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+  .section-title { font-family: var(--ff-head); font-size: clamp(28px, 3.5vw, 42px); font-weight: 400; line-height: 1.15; color: var(--text-primary); margin-bottom: 16px; }
+  .section-desc { font-size: 16px; color: var(--text-muted); max-width: 520px; line-height: 1.7; margin-bottom: 48px; }
+
+  /* ── PRODUCTS ── */
+  .products { background: var(--bg-surface); }
+  .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--product-grid); border: 2px solid var(--product-grid); }
+  .product-card { background: var(--product-bg); padding: 36px 32px; position: relative; transition: background 0.2s; }
+  .product-card:hover { background: var(--product-hover); }
+  .product-badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 10px; border-radius: 1px; margin-bottom: 20px; }
+  .badge-rent { background: rgba(26,122,74,0.15); color: #1A7A4A; border: 1px solid rgba(26,122,74,0.25); }
+  [data-theme="dark"] .badge-rent { background: rgba(26,122,74,0.2); color: #4ADE80; border: 1px solid rgba(74,222,128,0.2); }
+  .badge-sale { background: var(--accent-bg); color: var(--accent); border: 1px solid var(--accent-border); }
+  .product-name { font-size: 20px; font-weight: 700; color: var(--text-primary); margin-bottom: 10px; }
+  .product-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; }
+  .product-specs { list-style: none; margin-bottom: 24px; }
+  .product-specs li { font-size: 13px; color: var(--text-secondary); padding: 5px 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
+  .product-specs li:last-child { border-bottom: none; }
+  .spec-val { color: var(--text-primary); font-weight: 500; }
+  .product-price { font-size: 13px; color: var(--text-muted); margin-bottom: 6px; }
+  .product-price strong { font-size: 22px; color: var(--text-primary); font-family: var(--ff-head); font-weight: 400; }
+  .product-price em { font-style: normal; color: var(--accent); }
+  .product-cta {
+    display: block; width: 100%; text-align: center; padding: 11px;
+    font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+    border-radius: 2px; cursor: pointer; text-decoration: none;
+    transition: background 0.15s, border-color 0.15s;
+    border: 1px solid var(--product-cta-border); color: var(--product-cta-color); background: transparent;
+  }
+  .product-cta:hover { background: var(--product-cta-hover); border-color: var(--text-primary); }
+  .product-cta.primary-cta { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 700; }
+  .product-cta.primary-cta:hover { background: var(--accent-dark); border-color: var(--accent-dark); }
+
+  /* ── HOW IT WORKS ── */
+  .how { background: var(--bg-page); }
+  .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+  .steps-grid::before {
+    content: ''; position: absolute;
+    top: 32px; left: 80px; right: 80px; height: 1px;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent-bg) 100%);
+  }
+  .step { padding: 0 24px; position: relative; z-index: 1; }
+  .step-num {
+    width: 64px; height: 64px; background: var(--step-bg);
+    border: 2px solid var(--accent); border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--ff-head); font-size: 24px; color: var(--accent); margin-bottom: 24px;
+    transition: background 0.25s;
+  }
+  .step-title { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 10px; }
+  .step-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+  /* ── USE CASES ── */
+  .usecases { background: var(--bg-surface); }
+  .cases-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .case-card {
+    background: var(--case-bg); border: 1px solid var(--border);
+    border-radius: 2px; padding: 28px 24px; border-left: 3px solid var(--accent);
+    box-shadow: var(--shadow); transition: background 0.25s;
+  }
+  .case-icon { font-size: 28px; margin-bottom: 14px; display: block; }
+  .case-title { font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+  .case-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+  /* ── WHY US ── */
+  .whyus { background: var(--bg-page); }
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  .why-list { list-style: none; }
+  .why-item { padding: 20px 0; border-bottom: 1px solid var(--border); display: flex; gap: 20px; align-items: flex-start; }
+  .why-item:last-child { border-bottom: none; }
+  .why-icon {
+    width: 40px; height: 40px; background: var(--accent-bg);
+    border: 1px solid var(--accent-border); border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .why-text-title { font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .why-text-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+  .why-panel {
+    background: var(--form-bg); border: 1px solid var(--border);
+    border-top: 3px solid var(--accent); border-radius: 2px; padding: 40px 36px;
+    box-shadow: var(--shadow); transition: background 0.25s;
+  }
+  .why-panel-title { font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 32px; }
+  .why-big-num { font-family: var(--ff-head); font-size: 72px; line-height: 1; color: var(--text-primary); margin-bottom: 8px; }
+  .why-big-label { font-size: 14px; color: var(--text-muted); line-height: 1.5; margin-bottom: 32px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+  .why-checklist { list-style: none; }
+  .why-check-item { display: flex; gap: 12px; align-items: flex-start; padding: 8px 0; font-size: 14px; color: var(--text-secondary); }
+  .check-mark { color: var(--accent); font-weight: 700; font-size: 16px; flex-shrink: 0; line-height: 1.4; }
+
+  /* ── CTA SECTION ── */
+  .cta-section { background: var(--cta-bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 80px 40px; transition: background 0.25s; }
+  .cta-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 400px; gap: 60px; align-items: center; }
+  .cta-title { font-family: var(--ff-head); font-size: clamp(28px, 3vw, 40px); font-weight: 400; line-height: 1.15; color: var(--text-primary); margin-bottom: 16px; }
+  .cta-desc { font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 28px; }
+  .cta-contacts { display: flex; flex-direction: column; gap: 12px; }
+  .cta-contact-item { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--text-secondary); }
+  .cta-contact-icon { width: 36px; height: 36px; background: var(--accent-bg); border: 1px solid var(--accent-border); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .cta-contact-strong { color: var(--text-primary); font-weight: 600; }
+  .cta-form { background: var(--form-bg); border: 1px solid var(--border); border-top: 3px solid var(--accent); border-radius: 2px; padding: 32px 28px; box-shadow: var(--shadow); transition: background 0.25s; }
+
+  /* ── FOOTER ── */
+  footer { background: var(--footer-bg); border-top: 1px solid var(--border); padding: 40px 40px 28px; transition: background 0.25s; }
+  .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+  .footer-logo { font-weight: 700; font-size: 15px; color: var(--text-primary); text-decoration: none; }
+  .footer-logo span { color: var(--accent); }
+  .footer-text { font-size: 13px; color: var(--text-muted); }
+  .footer-links { display: flex; gap: 24px; list-style: none; }
+  .footer-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; }
+  .footer-links a:hover { color: var(--text-secondary); }
+
+  /* ── SUCCESS STATE ── */
+  .success-msg { display: none; text-align: center; padding: 20px 0; }
+  .success-msg.show { display: block; }
+  .success-icon { font-size: 36px; margin-bottom: 10px; }
+  .success-title { font-size: 17px; font-weight: 700; color: var(--success-title); margin-bottom: 6px; }
+  .success-sub { font-size: 14px; color: var(--text-muted); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 20px 60px; }
+    .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .stat-item { border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
+    .stat-item:nth-child(odd) { border-right: 1px solid var(--border); }
+    .section { padding: 60px 20px; }
+    .products-grid { grid-template-columns: 1fr; gap: 2px; }
+    .steps-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .steps-grid::before { display: none; }
+    .step { padding: 0; }
+    .cases-grid { grid-template-columns: 1fr; }
+    .why-grid { grid-template-columns: 1fr; }
+    .cta-inner { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .stats-bar { padding: 24px 20px; }
+    .cta-section { padding: 60px 20px; }
+    footer { padding: 32px 20px 24px; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+  }
+  @media (max-width: 480px) {
+    .steps-grid { grid-template-columns: 1fr; }
+    .hero-btns { flex-direction: column; }
+    .btn-primary, .btn-secondary { text-align: center; }
+    .nav-right .theme-toggle span:not(.theme-toggle-icon) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <a href="#" class="nav-logo">Временный<span>Забор</span>.kz</a>
+    <ul class="nav-links">
+      <li><a href="#products">Продукция</a></li>
+      <li><a href="#how">Как работаем</a></li>
+      <li><a href="#usecases">Применение</a></li>
+    </ul>
+  </div>
+  <div class="nav-right">
+    <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn" aria-label="Сменить тему">
+      <span class="theme-toggle-icon" id="theme-icon">☀️</span>
+      <span id="theme-label">Светлая</span>
+    </button>
+    <a href="#contact" class="nav-cta">Оставить заявку</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-eyebrow">Казахстан · Алматы · Астана</div>
+      <h1 class="hero-title">
+        Временные<br>ограждения<br>на <em>полимерпесчаных</em><br>блоках
+      </h1>
+      <p class="hero-sub">
+        Аренда и продажа секционных заборов для строительных площадок, дорожных работ и мероприятий. Монтаж за 1 день без спецтехники.
+      </p>
+      <div class="hero-badges">
+        <div class="badge"><span class="badge-dot"></span> Аренда от 1 дня</div>
+        <div class="badge"><span class="badge-dot"></span> Продажа оптом</div>
+        <div class="badge"><span class="badge-dot"></span> Доставка по Казахстану</div>
+      </div>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-primary">Получить расчёт</a>
+        <a href="#products" class="btn-secondary">Смотреть продукцию</a>
+      </div>
+    </div>
+
+    <div class="hero-form-card" id="hero-form-wrap">
+      <div class="form-body">
+        <div class="form-title">Быстрый расчёт стоимости</div>
+        <div class="form-sub">Ответим в течение 30 минут в рабочее время</div>
+        <div class="form-group">
+          <label class="form-label">Тип услуги</label>
+          <select class="form-select" id="h-type">
+            <option value="">Выберите...</option>
+            <option>Аренда временного ограждения</option>
+            <option>Покупка секций и блоков</option>
+            <option>Аренда + монтаж/демонтаж</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Длина периметра, м</label>
+            <input type="number" class="form-input" placeholder="100" id="h-length">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Срок (дней)</label>
+            <input type="number" class="form-input" placeholder="30" id="h-days">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Ваш номер телефона</label>
+          <input type="tel" class="form-input" placeholder="+7 (___) ___-__-__" id="h-phone">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Город / Объект</label>
+          <input type="text" class="form-input" placeholder="Алматы, ул. Абая 10" id="h-city">
+        </div>
+        <button class="form-submit" onclick="submitHeroForm()">Получить расчёт →</button>
+        <p class="form-note">Без предоплаты. Выезд на объект бесплатно.</p>
+        <div class="form-divider">или</div>
+        <a href="https://wa.me/77001234567?text=Здравствуйте!%20Нужен%20расчёт%20временного%20ограждения." class="wa-btn" target="_blank">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Написать в WhatsApp
+        </a>
+      </div>
+      <div class="success-msg" id="hero-success">
+        <div class="success-icon">✓</div>
+        <div class="success-title">Заявка принята!</div>
+        <div class="success-sub">Перезвоним в течение 30 минут.<br>Номер: <span id="hero-phone-confirm"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item"><div class="stat-num">17 <span>кг</span></div><div class="stat-label">Вес П/П блока</div></div>
+    <div class="stat-item"><div class="stat-num">1 <span>день</span></div><div class="stat-label">Срок монтажа</div></div>
+    <div class="stat-item"><div class="stat-num">2 <span>чел.</span></div><div class="stat-label">Для установки</div></div>
+    <div class="stat-item"><div class="stat-num">20+ <span>лет</span></div><div class="stat-label">Срок службы секций</div></div>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="section products" id="products">
+  <div class="section-inner">
+    <div class="section-eyebrow">Продукция</div>
+    <h2 class="section-title">Аренда и продажа ограждений</h2>
+    <p class="section-desc">Металлические секции на полимерпесчаных основаниях. Подбор комплекта по объекту — бесплатно.</p>
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-badge badge-rent">Аренда</div>
+        <div class="product-name">Строительное ограждение</div>
+        <div class="product-desc">Сетчатые секции типа 3D на П/П блоках. Для стройплощадок, реконструкций и земляных работ.</div>
+        <ul class="product-specs">
+          <li>Высота секции <span class="spec-val">1.95 м</span></li>
+          <li>Ширина секции <span class="spec-val">3.1 м</span></li>
+          <li>Основание (П/П блок) <span class="spec-val">17–23 кг</span></li>
+          <li>Монтаж <span class="spec-val">Без бетонирования</span></li>
+        </ul>
+        <div class="product-price">от <strong>150</strong> <em>₸/м/день</em></div>
+        <a href="#contact" class="product-cta primary-cta" style="margin-top:16px">Запросить расчёт</a>
+      </div>
+      <div class="product-card">
+        <div class="product-badge badge-rent">Аренда</div>
+        <div class="product-name">Дорожное ограждение</div>
+        <div class="product-desc">Усиленные основания для дорожных работ, ремонта коммуникаций. Повышенная устойчивость к транспортным потокам.</div>
+        <ul class="product-specs">
+          <li>Высота секции <span class="spec-val">1.95 м</span></li>
+          <li>Основание (утяжелённое) <span class="spec-val">30–36 кг</span></li>
+          <li>Световозвращение <span class="spec-val">Опция</span></li>
+          <li>Баннерная сетка <span class="spec-val">Опция</span></li>
+        </ul>
+        <div class="product-price">от <strong>180</strong> <em>₸/м/день</em></div>
+        <a href="#contact" class="product-cta" style="margin-top:16px">Запросить расчёт</a>
+      </div>
+      <div class="product-card">
+        <div class="product-badge badge-sale">Продажа</div>
+        <div class="product-name">П/П блоки и секции</div>
+        <div class="product-desc">Оптовая продажа полимерпесчаных оснований и металлических секций для собственного парка ограждений.</div>
+        <ul class="product-specs">
+          <li>П/П блок 600×200×110 мм <span class="spec-val">от 1 350 ₸/шт.</span></li>
+          <li>Секция 3D оцинкованная <span class="spec-val">по запросу</span></li>
+          <li>Мин. партия блоков <span class="spec-val">100 шт.</span></li>
+          <li>Доставка <span class="spec-val">по Казахстану</span></li>
+        </ul>
+        <div class="product-price">от <strong>1 350</strong> <em>₸/блок</em></div>
+        <a href="#contact" class="product-cta" style="margin-top:16px">Запросить прайс</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section how" id="how">
+  <div class="section-inner">
+    <div class="section-eyebrow">Процесс</div>
+    <h2 class="section-title">Как мы работаем</h2>
+    <p class="section-desc">От заявки до готового ограждения — без лишних согласований и предоплат.</p>
+    <div class="steps-grid">
+      <div class="step"><div class="step-num">1</div><div class="step-title">Заявка и расчёт</div><div class="step-desc">Вы оставляете заявку с параметрами объекта. Мы считаем стоимость и отправляем КП в течение 30 минут.</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-title">Договор и доставка</div><div class="step-desc">Подписываем договор, согласуем дату. Доставляем комплект секций и блоков на объект.</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-title">Монтаж</div><div class="step-desc">Устанавливаем ограждение силами 2 рабочих без спецтехники. Типовой периметр 200 м — за 1 рабочий день.</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-title">Демонтаж и возврат</div><div class="step-desc">По окончании работ забираем ограждение. Или оставляем — если хотите перенести на другой объект.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section class="section usecases" id="usecases">
+  <div class="section-inner">
+    <div class="section-eyebrow">Применение</div>
+    <h2 class="section-title">Для каких объектов</h2>
+    <p class="section-desc">Временные ограждения по СНиП обязательны для любой стройки и дорожных работ в населённых пунктах.</p>
+    <div class="cases-grid">
+      <div class="case-card"><span class="case-icon">🏗</span><div class="case-title">Строительные площадки</div><div class="case-desc">Жилые комплексы, коммерческие объекты, промышленное строительство. Обязательный элемент по нормам безопасности.</div></div>
+      <div class="case-card"><span class="case-icon">🛣</span><div class="case-title">Дорожные работы</div><div class="case-desc">Ремонт дорог, укладка коммуникаций, ямочный ремонт. Утяжелённые блоки для устойчивости у проезжей части.</div></div>
+      <div class="case-card"><span class="case-icon">🎪</span><div class="case-title">Мероприятия</div><div class="case-desc">Концерты, городские праздники, спортивные события. Быстрый монтаж и демонтаж, возможность брендирования.</div></div>
+      <div class="case-card"><span class="case-icon">⚡</span><div class="case-title">Аварийно-восстановительные</div><div class="case-desc">Ограждение опасных зон при авариях на коммуникациях. Готовность к выезду в день обращения.</div></div>
+      <div class="case-card"><span class="case-icon">🏭</span><div class="case-title">Промышленные площадки</div><div class="case-desc">Ограничение доступа на территорию предприятий, разделение рабочих зон, временные периметры.</div></div>
+      <div class="case-card"><span class="case-icon">🏢</span><div class="case-title">Реконструкция и фасадные работы</div><div class="case-desc">Защита пешеходных зон при ремонте фасадов и кровли. Козырёк-настил как опция.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="section whyus" id="why">
+  <div class="section-inner">
+    <div class="section-eyebrow">Преимущества</div>
+    <h2 class="section-title">Почему полимерпесчаные основания</h2>
+    <div class="why-grid">
+      <ul class="why-list">
+        <li class="why-item">
+          <div class="why-icon">⚖️</div>
+          <div><div class="why-text-title">На 35–40% легче бетонного блока</div><div class="why-text-desc">17–23 кг против 30–40 кг у бетона. Быстрее грузить, возить и монтировать — меньше затрат на логистику.</div></div>
+        </li>
+        <li class="why-item">
+          <div class="why-icon">💪</div>
+          <div><div class="why-text-title">Не крошится при транспортировке</div><div class="why-text-desc">Полимерпесчаный композит держит удары. Бетон при погрузке-разгрузке скалывается — блоки теряют функциональность.</div></div>
+        </li>
+        <li class="why-item">
+          <div class="why-icon">♻️</div>
+          <div><div class="why-text-title">Многократное использование</div><div class="why-text-desc">Срок службы блока — 10–15 лет. Идеально для арендной модели: низкий wear-rate снижает себестоимость.</div></div>
+        </li>
+        <li class="why-item">
+          <div class="why-icon">🌡️</div>
+          <div><div class="why-text-title">Работает в казахстанском климате</div><div class="why-text-desc">Морозостойкость до -50°C. Не впитывает воду, не трескается при промерзании в отличие от обычного бетона.</div></div>
+        </li>
+      </ul>
+      <div class="why-panel">
+        <div class="why-panel-title">Первый в Казахстане</div>
+        <div class="why-big-num">0</div>
+        <div class="why-big-label">специализированных поставщиков П/П оснований для временных ограждений на рынке КЗ — мы первые, кто системно предлагает этот продукт.</div>
+        <ul class="why-checklist">
+          <li class="why-check-item"><span class="check-mark">✓</span> Работаем с ТОО по безналу, с НДС</li>
+          <li class="why-check-item"><span class="check-mark">✓</span> Договор, акты, счета-фактуры</li>
+          <li class="why-check-item"><span class="check-mark">✓</span> Доставка в Алматы, Астану, регионы</li>
+          <li class="why-check-item"><span class="check-mark">✓</span> Возможна поставка под тендер</li>
+          <li class="why-check-item"><span class="check-mark">✓</span> Монтаж и демонтаж под ключ</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-section" id="contact">
+  <div class="cta-inner">
+    <div>
+      <div class="section-eyebrow">Связаться с нами</div>
+      <h2 class="cta-title">Получите расчёт<br>под ваш объект</h2>
+      <p class="cta-desc">Укажите параметры — пришлём конкретную цифру, а не «от и до». Выезд на объект для замера — бесплатно.</p>
+      <div class="cta-contacts">
+        <div class="cta-contact-item">
+          <div class="cta-contact-icon">📞</div>
+          <div><div style="font-size:12px;color:var(--text-muted);margin-bottom:2px">Телефон / WhatsApp</div><div class="cta-contact-strong">+7 (700) 123-45-67</div></div>
+        </div>
+        <div class="cta-contact-item">
+          <div class="cta-contact-icon">✉️</div>
+          <div><div style="font-size:12px;color:var(--text-muted);margin-bottom:2px">Email</div><div class="cta-contact-strong">info@zabor.kz</div></div>
+        </div>
+        <div class="cta-contact-item">
+          <div class="cta-contact-icon">📍</div>
+          <div><div style="font-size:12px;color:var(--text-muted);margin-bottom:2px">Работаем в</div><div class="cta-contact-strong">Алматы, Астана, регионы КЗ</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="cta-form" id="cta-form-wrap">
+      <div class="form-body" id="cta-form-body">
+        <div class="form-title" style="margin-bottom:4px">Оставить заявку</div>
+        <div class="form-sub">Ответим в течение 30 минут</div>
+        <div class="form-group">
+          <label class="form-label">Имя и компания</label>
+          <input type="text" class="form-input" placeholder="Иван, ТОО «СтройПодряд»" id="c-name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Телефон</label>
+          <input type="tel" class="form-input" placeholder="+7 (___) ___-__-__" id="c-phone">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Тип услуги</label>
+          <select class="form-select" id="c-type">
+            <option value="">Выберите...</option>
+            <option>Аренда временного ограждения</option>
+            <option>Покупка секций и блоков</option>
+            <option>Аренда + монтаж/демонтаж</option>
+            <option>Хочу обсудить условия</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Комментарий (опционально)</label>
+          <input type="text" class="form-input" placeholder="Объект, сроки, объём..." id="c-comment">
+        </div>
+        <button class="form-submit" onclick="submitCtaForm()">Отправить заявку →</button>
+        <p class="form-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных.</p>
+        <a href="https://wa.me/77001234567?text=Здравствуйте!%20Интересует%20аренда%20или%20покупка%20временных%20ограждений." class="wa-btn" target="_blank">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Написать в WhatsApp
+        </a>
+      </div>
+      <div class="success-msg" id="cta-success">
+        <div class="success-icon">✓</div>
+        <div class="success-title">Заявка принята!</div>
+        <div class="success-sub">Перезвоним в течение 30 минут в рабочее время.<br>Номер: <span id="cta-phone-confirm"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <a href="#" class="footer-logo">Временный<span>Забор</span>.kz</a>
+    <p class="footer-text">© 2025 · Аренда и продажа временных ограждений в Казахстане</p>
+    <ul class="footer-links">
+      <li><a href="#products">Продукция</a></li>
+      <li><a href="#contact">Контакты</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  const next = isDark ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('theme-icon').textContent = isDark ? '🌙' : '☀️';
+  document.getElementById('theme-label').textContent = isDark ? 'Тёмная' : 'Светлая';
+  try { localStorage.setItem('theme', next); } catch(e) {}
+}
+
+(function() {
+  try {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+      document.addEventListener('DOMContentLoaded', function() {
+        const icon = document.getElementById('theme-icon');
+        const label = document.getElementById('theme-label');
+        if (icon) icon.textContent = '🌙';
+        if (label) label.textContent = 'Тёмная';
+      });
+    }
+  } catch(e) {}
+})();
+
+function submitHeroForm() {
+  const phone = document.getElementById('h-phone').value.trim();
+  const type = document.getElementById('h-type').value;
+  if (!phone) { document.getElementById('h-phone').style.borderColor = 'var(--accent)'; return; }
+  document.getElementById('hero-phone-confirm').textContent = phone;
+  document.querySelector('#hero-form-wrap .form-body').style.display = 'none';
+  document.getElementById('hero-success').classList.add('show');
+  console.log('Hero form:', { type, phone, length: document.getElementById('h-length').value, days: document.getElementById('h-days').value, city: document.getElementById('h-city').value, ts: new Date().toISOString() });
+}
+
+function submitCtaForm() {
+  const phone = document.getElementById('c-phone').value.trim();
+  if (!phone) { document.getElementById('c-phone').style.borderColor = 'var(--accent)'; return; }
+  document.getElementById('cta-phone-confirm').textContent = phone;
+  document.getElementById('cta-form-body').style.display = 'none';
+  document.getElementById('cta-success').classList.add('show');
+  console.log('CTA form:', { name: document.getElementById('c-name').value, phone, type: document.getElementById('c-type').value, comment: document.getElementById('c-comment').value, ts: new Date().toISOString() });
+}
+</script>
+
+</body>
+</html>
